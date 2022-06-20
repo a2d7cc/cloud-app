@@ -74,6 +74,18 @@ class UserController {
         }
     }
 
+    async uploadAvatar(req, res) {
+        try {
+            const fileAvatar = req.files.file
+            const userId = req.user.id
+            const userData = await UserService.uploadAvatar(userId, fileAvatar)  
+            return res.json(userData)
+        } catch (error) {
+            console.log(error)
+            return res.status(400).json({message: 'Upload avatar error'})
+        }
+    }
+
 }
 
 module.exports = new UserController()

@@ -13,5 +13,6 @@ router.get('/activate/:link', UserController.activate);
 router.post('/logout', UserController.logout)
 router.get('/refresh', UserController.refresh)
 router.get('/users', authMiddleware, UserController.getUsers)
+router.post('/avatar', authMiddleware, UserController.uploadAvatar);
 
 module.exports = router

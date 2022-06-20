@@ -12,6 +12,6 @@ module.exports = class UserDto {
         this.id = model._id
         this.avatar = model.avatar
         this.diskSpace = model.diskSpace
-        this.availableSpace = model.availableSpace
+        this.usedSpace = model.usedSpace
     }
 }
