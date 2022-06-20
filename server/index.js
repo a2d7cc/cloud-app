@@ -1,9 +1,10 @@
 require("dotenv").config()
 const express = require("express")
 const mongoose = require("mongoose")
-const router = require("./router")
 const cors = require("cors")
 const cookie = require("cookie-parser")
+const authRouter = require('./routes/auth.routes')
+const fileRouter = require('./routes/file.routes')
 
 const port = process.env.port || 5000
 const app = express()
@@ -16,14 +17,15 @@ app.use(cors({
     credentials: true,
     origin: process.env.client_url
 }))
-app.use('/api', router)
+app.use('/api/auth', authRouter)
+app.use('/api/files', fileRouter)
 app.use(errorMidleware)
 
 
 
-const start = () => {
+const start = async () => {
     try {
-        mongoose.connect(process.env.mongo)
+        await mongoose.connect(process.env.mongo)
         app.listen(port, () => {
             console.log('Server started at ' + port )
         })

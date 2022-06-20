@@ -5,6 +5,8 @@ const uuid = require('uuid')
 const UserDto = require('../dtos/user-dto')
 const MailService = require('../services/mail-service')
 const TokenService = require('../services/token-service')
+const FileService = require('./file-service')
+const File = require('../models/file.model')
 
 class UserService {
     async registration(email, password) {
@@ -21,6 +23,7 @@ class UserService {
         const userDto = new UserDto(user)
         const tokens = TokenService.generateTokens({...userDto})
         await TokenService.saveToken(userDto.id, tokens.refreshToken)
+        await FileService.createUserDir(userDto.id)
         return {
             user: userDto,
             ...tokens
