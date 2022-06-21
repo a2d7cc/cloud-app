@@ -73,7 +73,19 @@ class FileController {
     }
 
     async deleteFile(req, res) {
-
+        try {
+            const file = await File.findOne({_id: req.query.id, user: req.user.id})
+            if(!file) {
+                throw new Error('The file is not founded by deleting')
+            }
+            FileService.deleteFile(file)
+            await file.remove()
+            return res.json('File was deleted')
+            
+        } catch (error) {
+            console.log(error)
+            return res.status(400).json(error)
+        }
     }
 
     async searchFile(req, res) {

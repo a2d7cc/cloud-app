@@ -8,15 +8,15 @@ class FileService {
         const filePath = `${process.env.filePath}/${file.user}/${file.path}`
         return new Promise((resolve, reject) => {
             try {
-                if(!fs.existsSync(filePath)) {
+                if (!fs.existsSync(filePath)) {
                     fs.mkdirSync(filePath, { recursive: true })
-                    return resolve({message: 'Folder was created'})
+                    return resolve({ message: 'Folder was created' })
                 } else {
-                    return reject({message: 'Folder already exist'})
+                    return reject({ message: 'Folder already exist' })
                 }
             } catch (error) {
                 console.log(error)
-                return reject({message: 'Creating user folder fail'})
+                return reject({ message: 'Creating user folder fail' })
             }
         })
     }
@@ -25,23 +25,23 @@ class FileService {
         return new Promise((resolve, reject) => {
             const filePath = `${process.env.filePath}/${userId}`
             try {
-                if(!fs.existsSync(filePath)) {
+                if (!fs.existsSync(filePath)) {
                     fs.mkdirSync(filePath, { recursive: true })
-                    return resolve({message: 'Folder was created'})
+                    return resolve({ message: 'Folder was created' })
                 } else {
-                    return reject({message: 'Folder already exist'})
+                    return reject({ message: 'Folder already exist' })
                 }
             } catch (error) {
                 console.log(error)
-                return reject({message: 'Creating user folder fail'})
+                return reject({ message: 'Creating user folder fail' })
             }
         })
     }
 
     async uploadFile(uploadedFile, user, parentFile) {
-        
-        if(user.usedSpace + uploadedFile.size > user.diskSpace) {
-            return res.status(400).json({message: 'There no space on the disk'})
+
+        if (user.usedSpace + uploadedFile.size > user.diskSpace) {
+            return res.status(400).json({ message: 'There no space on the disk' })
         }
         user.usedSpace = user.usedSpace + uploadedFile.size
 
@@ -56,18 +56,18 @@ class FileService {
         })
 
 
-        if(!parentFile) {
+        if (!parentFile) {
             const path = uploadedFile.name
-            const movePath =  `${process.env.filePath}/${user._id}/${path}`
-            if(fs.existsSync(movePath)) {
+            const movePath = `${process.env.filePath}/${user._id}/${path}`
+            if (fs.existsSync(movePath)) {
                 throw new Error('File with this name already exist')
             }
             uploadedFile.mv(movePath)
             dbFile.path = path
         } else {
             const path = parentFile.path + '/' + uploadedFile.name
-            const movePath =  `${process.env.filePath}/${user._id}/${path}`
-            if(fs.existsSync(movePath)) {
+            const movePath = `${process.env.filePath}/${user._id}/${path}`
+            if (fs.existsSync(movePath)) {
                 throw new Error('File with this name already exist')
             }
             dbFile.path = path
@@ -87,7 +87,16 @@ class FileService {
         return `${process.env.filePath}/${file.user}/${file.path}`
     }
 
-
+    deleteFile(file) {
+        const path = this.getPath(file)
+        if (fs.existsSync(path)) {
+            if (file.type === 'dir') {
+                fs.rmdirSync(path)
+            } else {
+                fs.unlinkSync(path)
+            }
+        }
+    }
 
 }
 
