@@ -89,7 +89,15 @@ class FileController {
     }
 
     async searchFile(req, res) {
-
+        try {
+            const search = req.query.search
+            let files = await File.find({user: req.user.id})
+            files = files.filter(file => file.name.includes(search))
+            return res.json(files)
+        } catch (error) {
+            console.log(error)
+            return res.status(400).json(error)
+        }
     }
 
     async getFiles(req, res) {
