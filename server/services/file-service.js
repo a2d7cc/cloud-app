@@ -1,5 +1,7 @@
+const { use } = require('bcrypt/promises')
 const fs = require('fs')
 const File = require('../models/file.model')
+const User = require('../models/user.model')
 
 class FileService {
     async createFolder(file) {
@@ -35,6 +37,58 @@ class FileService {
             }
         })
     }
+
+    async uploadFile(uploadedFile, user, parentFile) {
+        
+        if(user.usedSpace + uploadedFile.size > user.diskSpace) {
+            return res.status(400).json({message: 'There no space on the disk'})
+        }
+        user.usedSpace = user.usedSpace + uploadedFile.size
+
+        await user.save()
+
+        const type = uploadedFile.name.split('.').pop()
+        const name = uploadedFile.name
+        const size = uploadedFile.size
+
+        const dbFile = new File({
+            name, type, size, user: user._id
+        })
+
+
+        if(!parentFile) {
+            const path = uploadedFile.name
+            const movePath =  `${process.env.filePath}/${user._id}/${path}`
+            if(fs.existsSync(movePath)) {
+                throw new Error('File with this name already exist')
+            }
+            uploadedFile.mv(movePath)
+            dbFile.path = path
+        } else {
+            const path = parentFile.path + '/' + uploadedFile.name
+            const movePath =  `${process.env.filePath}/${user._id}/${path}`
+            if(fs.existsSync(movePath)) {
+                throw new Error('File with this name already exist')
+            }
+            dbFile.path = path
+            dbFile.parent = parentFile._id
+            uploadedFile.mv(movePath)
+            parentFile.childs.push(dbFile._id)
+            parentFile.save()
+        }
+
+
+        await dbFile.save()
+
+        return dbFile
+    }
+
+    getPath(file) {
+        return `${process.env.filePath}/${file.user}/${file.path}`
+    }
+
+
+
 }
 
 module.exports = new FileService()
