@@ -1,0 +1,23 @@
+
+
+
+.navbar {
+    background-color: #fff;
+    padding: 1rem 0;
+
+    &__header {
+        margin-left: 1rem;
+    }
+
+    &__menu {
+        margin-left: auto;
+    }
+
+    &__link {
+        list-style: none;
+        margin-left: 1rem;
+        a {
+            text-decoration: none;
+        }
+    }
+}

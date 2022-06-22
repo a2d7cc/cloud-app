@@ -1,0 +1,13 @@
+@import "../../../utils/styles/colors";
+
+.btn {
+    display: block;
+    border: none;
+    background-color: $font-color;
+    border-radius: 8px;
+    color: white;
+    font-weight: 700;
+    padding: 10px 20px;
+    cursor: pointer;
+    align-self: flex-end;
+}
