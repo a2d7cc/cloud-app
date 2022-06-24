@@ -9,10 +9,19 @@ const defaultState = {
 export default function userReducer(state = defaultState, action) {
     switch(action.type) {
         case SET_USER:
-
+            return {
+                ...state,
+                currentUser: action.payload,
+                isAuth: true
+            }
             break
         case LOGOUT:
-
+            localStorage.removeItem('token')
+            return {
+                ...state,
+                currentUser: null,
+                isAuth: false
+            }
             break
         default:
             return state
@@ -20,5 +29,5 @@ export default function userReducer(state = defaultState, action) {
 }
 
 
-export const setUser = user =>({type: SET_USER, payload: user})
+export const setUser = user => ({type: SET_USER, payload: user})
 export const logout = () => ({type: LOGOUT})
