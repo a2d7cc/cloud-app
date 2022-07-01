@@ -1,6 +1,5 @@
 import $api from '../http/index'
-import {setUser} from '../reducers/userReducer'
-import { logout } from '../reducers/userReducer'
+import {setUser, logout} from '../reducers/userReducer'
 import { showLoader, hideLoader } from '../reducers/appReducer'
 
 export default class UserService {
@@ -49,7 +48,7 @@ export default class UserService {
                 dispatch(showLoader())
                 const response = await $api.get(`auth/refresh`,)
                 dispatch(setUser(response.data.user))
-                localStorage.setItem('token', response.data.token)
+                localStorage.setItem('token', response.data.accessToken)
                 dispatch(hideLoader())
             } catch (error) {
                 console.log(error)

@@ -26,6 +26,7 @@ const Navbar = () => {
         <ul className="navbar__menu"></ul>
         {!isAuth && <li className="navbar__link"><NavLink to='login'>Login</NavLink></li>}
         {!isAuth && <li className="navbar__link"><NavLink to='registration'>Registration</NavLink></li>}
+        {isAuth && <li className="navbar__link"><NavLink to='/'>Main</NavLink></li>}
         {isAuth && <li className="navbar__link"><a href="#" onClick={logoutHandler}>Logout</a></li>}
     </div>
    </div>

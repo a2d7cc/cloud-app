@@ -1,0 +1,80 @@
+@import '../../../utils/styles/colors';
+
+
+.diskcontrols {
+    display: flex;
+
+    &__back {
+        display: inline-block;
+        outline: none;
+        border: 1px solid $font-color;
+        background: rgb(250, 254, 255);
+        padding: 5px 10px;
+        border-radius: 5px;
+        margin-right: 1rem;
+        cursor: pointer;
+    }
+
+    &__create-folder {
+        display: inline-block;
+        outline: none;
+        background: $font-color;
+        color: white;
+        border-radius: 5px;
+        padding: 7px;
+        cursor: pointer;
+        margin-right: 1rem;
+    }
+
+    &__view {
+        margin-left: auto;
+        display: flex;
+
+    }
+
+    &__plate,
+    &__list {
+        height: 20px;
+        width: 20px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        background: no-repeat center center;
+        background-size: contain;
+    }
+
+
+    &__plate {
+        background-image: url("../../../assets/plate.svg");
+        margin-left: 7px;
+    }
+    &__list {
+        background-image: url("../../../assets/list.svg");
+    }
+
+    &__upload {
+        display: flex;
+        align-items: center;
+        margin-right: 1rem;
+    }
+    
+    &__upload-input {
+        display: none;
+    }
+
+    &__upload-label {
+        background-color: $font-color;
+        color: white;
+        border-radius: 5px;
+        padding: 7px;
+        cursor: pointer;
+    }
+
+    &__select {
+        border: 1px dashed $font-color;
+        border-radius: 5px;
+        padding: 7px;
+        background: white;
+        outline: none
+    }
+}

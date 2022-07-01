@@ -1,0 +1,132 @@
+@import '../../../../utils/styles/colors';
+
+.filelist {
+    .file {
+        margin: 10px 0;
+        border-bottom: 2px solid $font-color;
+        display: grid;
+        grid-template-columns: 1fr 4fr repeat(4, 1fr);
+        align-items: center;
+
+        &:hover {
+            transform: scale(1.02)
+        }
+
+        &__img {
+            justify-content: center;
+        }
+
+        &__date {
+            grid-column-start: 5;
+            justify-self: center;
+        }
+
+        &__size {
+            grid-column-start: 6;
+            justify-self: center;
+        }
+
+        &__btn {
+            display: none;
+            cursor: pointer;
+            background: white;
+            outline: none;
+            border-radius: 10px ;
+
+        }
+
+        &:hover {
+            cursor: pointer;
+            background-color: rgb(247, 247, 247);
+        }
+
+        &:hover .file__date {
+            grid-column-start: 3;
+        }
+
+        &:hover .file__size {
+            grid-column-start: 4;
+        }
+
+        &:hover .file__download {
+            grid-column-start: 5;
+            display: block;
+        }
+
+        &:hover .file__delete {
+            grid-column-start: 6;
+            display: block;
+        }
+
+    }
+
+}
+
+.fileplate {
+    .file {
+        flex-basis: 25%;
+        display: grid;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 1.2rem;
+        box-sizing: border-box;
+
+        &:hover {
+            transform: scale(1.02)
+        }
+
+        &__name {
+            padding: 3px;
+        }
+
+        &__img {
+            display: block;
+            height: 100px;
+            margin: 0 auto;
+        }
+
+        &__date {
+            text-align: center;
+            padding: 3px;
+        }
+
+        &__size {
+            text-align: center;
+            padding: 3px;
+        }
+
+        &__btn {
+            display: none;
+            cursor: pointer;
+            background: white;
+            outline: none;
+            border-radius: 10px ;
+
+        }
+
+        &:hover {
+            cursor: pointer;
+            background-color: rgb(247, 247, 247);
+        }
+
+        &:hover .file__date {
+            display: none;
+        }
+
+        &:hover .file__size {
+            display: none;
+        }
+
+        &:hover .file__download {
+
+            display: block;
+        }
+
+        &:hover .file__delete {
+
+            display: block;
+        }
+
+    }
+}

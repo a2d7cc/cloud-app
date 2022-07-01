@@ -91,7 +91,7 @@ class FileService {
         const path = this.getPath(file)
         if (fs.existsSync(path)) {
             if (file.type === 'dir') {
-                fs.rmdirSync(path)
+                fs.rmdirSync(path, { recursive: true, force: true })
             } else {
                 fs.unlinkSync(path)
             }

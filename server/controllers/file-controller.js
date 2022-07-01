@@ -6,6 +6,9 @@ const ApiError = require('../exceptions/api-error')
 const fs = require('fs')
 
 class FileController {
+    constructor() {
+        this.deleteFile = this.deleteFile.bind(this)
+    }
     async createDir(req, res) {
         try {
             const { name, type, parent } = req.body
@@ -78,9 +81,9 @@ class FileController {
             if(!file) {
                 throw new Error('The file is not founded by deleting')
             }
-            FileService.deleteFile(file)
-            await file.remove()
-            return res.json('File was deleted')
+
+            this.deleteRecursive(file)
+            return res.json('Files was deleted')
             
         } catch (error) {
             console.log(error)
@@ -104,6 +107,7 @@ class FileController {
         try {
             const {sort} = req.query
             let files
+            console.log(sort)
             switch(sort) {
                 case 'name':
                     files = await File.find({user: req.user.id, parent: req.query.parent}).sort({name: 1})
@@ -125,6 +129,21 @@ class FileController {
         }
     }
 
+
+    async deleteRecursive(file) {
+        await File.deleteMany({parent: file._id, type: { $ne: 'dir' } })
+        const folders = await File.find({parent: file._id, type: 'dir'})
+        folders.forEach(async (file) => {
+            if(!file.childs.length) {
+
+                await file.remove()
+            } else {
+            this.deleteRecursive(file)
+            }
+        });
+        FileService.deleteFile(file)
+        await file.remove()
+    }
 }
 
 module.exports = new FileController()

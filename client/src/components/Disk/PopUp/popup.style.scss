@@ -1,0 +1,46 @@
+.popup {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    &__content {
+        width: 600px;
+        min-width: 300px;
+        padding: 1rem;
+        background: white;
+
+        h2 {
+            text-align: center;
+        }
+
+        button {
+            margin-left: auto;
+            margin-top: 1rem;
+        }
+
+    }
+
+    &__close {
+        display: block;
+        background: none;
+        outline: none;
+        border: none;
+        color: black;
+        font-size: 18px;
+        margin-left: auto;
+        cursor: pointer;
+
+        &:hover {
+            transform: scale(1.2);
+        }
+    }
+}
+
+
+

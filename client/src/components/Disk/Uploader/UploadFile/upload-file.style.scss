@@ -1,0 +1,32 @@
+
+@import '../../../../utils/styles/colors';
+
+.upload-file {
+    background-color: $background-color;
+    border-radius: 8px;
+    margin: 10px 0;
+    padding: 5px 10px;
+    &__header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__progress-bar {
+        height: 1rem;
+        border-radius: 9px;
+        background-color: $font-color;
+        display: flex;
+        margin: 3px 0;
+    }
+
+    &__upload-bar {
+        background-color: green;
+        border-radius: 9px ;
+    }
+
+    &__percent {
+        color: $background-color;
+        left: 50%;
+        position: absolute;
+    }
+}
